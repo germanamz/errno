@@ -1,5 +1,5 @@
 {
-  "name": "errno",
+  "name": "@germanamz/errno",
   "version": "1.0.0",
   "main": "dist/index.js",
   "repository": "https://github.com/germanamz/errno.git",
