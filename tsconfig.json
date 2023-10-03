@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2021",
+    "outDir": "dist",
+    "sourceMap": true,
+    "strict": true,
+    "importHelpers": true,
+    "noEmitHelpers": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
