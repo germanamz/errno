@@ -1,15 +1,9 @@
 # Errno
 Better errors make your life simpler.
 
-Errno standardizes they way errors are created and used by providing
-a simple interface that can be used as errors for any AP or SDK.
-
-It can be used as a replacement of plain old js Error or alongside
-them, it extends the *Error* class making it easier to do so.
-
-But what makes Errno useful is that it adds a couple of new properties
-*code* and *context*, they make error identification easier in a
-big system.
+Errno simplifies how errors are handled on reliable systems
+by providing a clear interface to define known code, messages
+and statuses.
 
 # Usage
 
@@ -30,7 +24,6 @@ forward.
 const res = JSON.stringify(e);
 ```
 Having the result be
-
 ```json
 {
   "code": "NOT_FOUND",
@@ -47,7 +40,7 @@ Having the result be
 A better way of using Errno is by creating a set of `known` errors.
 
 ```typescript
-const NOT_FOUND = (context?: unknown[]) => new Errno('NOT_FOUND', 'That thing was not found', context);
+const NOT_FOUND = (context?: unknown[]) => new Errno('NOT_FOUND', 'Not found', context);
 
 const e = NOT_FOUND({
   thingId: 'inexistent',
@@ -59,7 +52,7 @@ Having the same result as the prev example but with a bit less code
 ```json
 {
   "code": "NOT_FOUND",
-  "message": "That thing was not found",
+  "message": "Not found",
   "context": [
     {
       "thingId": "inexistent"
@@ -68,11 +61,11 @@ Having the same result as the prev example but with a bit less code
 }
 ```
 
-_Note: There's no way for use to know your errors in advance, so the better
-thing to do is you write your own set_
+_Note: There's no way for us to know your errors in advance, so the best
+thing to do is for you to write your own set of known errors_
 
 ### Translate to Errno
-You can take a plain Error and transform it to be an Errno using `translateToErrno`
+You can take a plain Error and _translate_ it to be an Errno using `translateToErrno`
 
 ```typescript
 import { translateToErrno } from 'errno';
@@ -107,4 +100,20 @@ Errno [Error]: something went wrong
   [Symbol(isErrno)]: true
 }
 ```
-Remember Errno is an Error subclass
+Remember Errno is an Error subclass which is why if a new instance of Errno
+is created it will have a `e.stack` property.
+
+Another fun thing you could do is to implement your own class using the ErrnoI
+interface, but that's a rabbit hole on its own... so I'll leave it to you.
+
+## Additional notes
+A very good approach for creating reliable systems is to use some kind of
+interface for responses between two system parts, [neverthrow](https://www.npmjs.com/package/neverthrow)
+provides a simple structure for that, in combination with Errno it can
+have an even more robust interface for error handling and definition.
+
+# Licence
+Open source [licensed as MIT](https://github.com/germanamz/errno/blob/main/LICENSE).
+
+# Credits
+German Meza ([germanamz.com](https://germanamz.com) / @germanamz)

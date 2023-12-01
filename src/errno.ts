@@ -1,23 +1,27 @@
 export const isErrnoSymbol = Symbol('isErrno');
 
 export interface ErrnoI {
-  code: string;
-  message: string;
-  context: unknown[];
+  code?: string;
+  message?: string;
+  context?: unknown[];
+  status?: number;
 }
 
 export class Errno extends Error implements ErrnoI {
   readonly [isErrnoSymbol] = true;
 
-  public code: string;
+  public code?: string;
 
-  public context: unknown[];
+  public context?: unknown[];
 
-  constructor(code: string, message: string, context?: unknown[]) {
+  public status?: number;
+
+  constructor(code?: string, message?: string, context?: unknown[], status?: number) {
     super(message);
 
     this.code = code;
     this.context = context || [];
+    this.status = status;
   }
 
   toJSON(): ErrnoI {
@@ -25,6 +29,7 @@ export class Errno extends Error implements ErrnoI {
       code: this.code,
       message: this.message,
       context: this.context,
+      status: this.status,
     };
   }
 }
