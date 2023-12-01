@@ -4,6 +4,15 @@
   "main": "dist/index.js",
   "repository": "https://github.com/germanamz/errno.git",
   "license": "MIT",
+  "keywords": [
+    "errno",
+    "error",
+    "interface",
+    "simple",
+    "code",
+    "errors",
+    "known"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "eslint --ext .ts,.js src"
