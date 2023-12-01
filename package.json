@@ -4,6 +4,9 @@
   "main": "dist/index.js",
   "repository": "https://github.com/germanamz/errno.git",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "errno",
     "error",
