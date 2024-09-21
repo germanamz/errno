@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint --ext .ts,.js src"
   },
   "devDependencies": {

@@ -1,10 +1,18 @@
 import { Errno } from './errno';
 
-export const translateToErrno = (e: Error, code: string = 'UNKNOWN_ERROR', context?: unknown[], status?: number) => {
-  const eno = new Errno(code, e.message, context, status);
+export const translateToErrno = (e: unknown, code: string = 'UNKNOWN_ERROR', context?: unknown[], status?: number) => {
+  if (e instanceof Errno) {
+    return e;
+  }
 
-  eno.name = e.name;
-  eno.stack = e.stack;
+  if (e instanceof Error) {
+    const eno = new Errno(code, e.message, context, status);
 
-  return eno;
+    eno.name = e.name;
+    eno.stack = e.stack;
+
+    return eno;
+  }
+
+  return new Errno(code, 'Unknown error', context, status);
 };
