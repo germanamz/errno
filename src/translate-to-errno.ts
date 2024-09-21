@@ -1,7 +1,8 @@
 import { Errno } from './errno';
+import { isErrno } from './is-errno';
 
-export const translateToErrno = (e: unknown, code: string = 'UNKNOWN_ERROR', context?: unknown[], status?: number) => {
-  if (e instanceof Errno) {
+export const translateToErrno = <S extends number>(e: unknown, code: string = 'UNKNOWN_ERROR', context?: unknown[], status?: S): Errno<S> => {
+  if (isErrno<S>(e)) {
     return e;
   }
 

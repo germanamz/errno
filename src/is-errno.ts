@@ -1,3 +1,3 @@
 import { Errno, isErrnoSymbol } from './errno';
 
-export const isErrno = (e: any): e is Errno => Boolean(e[isErrnoSymbol]);
+export const isErrno = <S extends number>(e: any): e is Errno<S> => Boolean(e[isErrnoSymbol]);
