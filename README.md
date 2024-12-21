@@ -5,6 +5,11 @@ Errno simplifies how errors are handled on reliable systems
 by providing a clear interface to define known code, messages
 and statuses.
 
+### Errno signature
+```typescript
+class Errno<S extends number = number>(code: string, message: string, status: S, context: unknown[] = [], source?: Error);
+```
+
 # Usage
 
 Just create an instance
@@ -28,6 +33,41 @@ Having the result be
 {
   "code": "NOT_FOUND",
   "message": "That thing was not found",
+  "context": [
+    {
+      "thingId": "inexistent"
+    }
+  ]
+}
+```
+
+### Errno with source
+`source` is meant to extend the context of the error, it can be used to have more data for logging
+it is not included in the JSON version of an Errno.
+
+```typescript
+const e = new Errno(
+  'NOT_FOUND',
+  'That thing was not found',
+  [
+    {
+      thingId: 'inexistent',
+    },
+  ],
+  new Error('simulates a thrown error')
+);
+```
+This is equivalent to use `transalateToErrno`.
+
+After running the previous code, you can do:
+```typescript
+JSON.stringify(e);
+```
+The result json 
+```json
+{
+  "code": "UNHANDLED_ERROR",
+  "message": "something went wrong",
   "context": [
     {
       "thingId": "inexistent"
