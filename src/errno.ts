@@ -16,12 +16,20 @@ export class Errno<S extends number = number> extends Error implements ErrnoI<S>
 
   public status: S;
 
-  constructor(code: string, message: string, status: S, context: unknown[] = []) {
+  public source?: Error;
+
+  constructor(code: string, message: string, status: S, context: unknown[] = [], source?: Error) {
     super(message);
 
     this.code = code;
     this.context = context;
     this.status = status;
+    this.source = source;
+
+    if (source) {
+      this.name = source.name;
+      this.stack = source.stack;
+    }
   }
 
   toJSON(): ErrnoI<S> {
